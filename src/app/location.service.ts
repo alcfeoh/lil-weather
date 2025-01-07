@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {WeatherService} from "./weather.service";
 
 export const LOCATIONS : string = "locations";
@@ -7,10 +7,7 @@ export const LOCATIONS : string = "locations";
 export class LocationService {
 
   locations : string[] = [];
-
-  constructor(private weatherService : WeatherService) {
-
-  }
+  weatherService = inject(WeatherService);
 
   addLocation(zipcode : string){
     this.locations.push(zipcode);
@@ -23,9 +20,5 @@ export class LocationService {
       this.locations.splice(index, 1);
       this.weatherService.removeCurrentConditions(zipcode);
     }
-  }
-
-  getLocations() : string[]{
-    return this.locations;
   }
 }
