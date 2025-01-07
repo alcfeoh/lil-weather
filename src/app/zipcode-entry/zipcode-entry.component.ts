@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {LocationService} from "../location.service";
 
 @Component({
@@ -7,7 +7,7 @@ import {LocationService} from "../location.service";
 })
 export class ZipcodeEntryComponent {
 
-  constructor(private service : LocationService) { }
+  private service = inject(LocationService);
 
   addLocation(zipcode : string){
     this.service.addLocation(zipcode);

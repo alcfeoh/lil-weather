@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {WeatherService} from '../weather.service';
 import {ActivatedRoute, RouterLink} from '@angular/router';
 import {DatePipe, DecimalPipe} from '@angular/common';
@@ -18,11 +18,13 @@ export class ForecastsListComponent {
 
   zipcode!: string;
   forecast!: Forecast;
+  weatherService = inject(WeatherService);
+  route = inject(ActivatedRoute);
 
-  constructor(protected weatherService: WeatherService, route : ActivatedRoute) {
-    route.params.subscribe(params => {
+  constructor() {
+    this.route.params.subscribe(params => {
       this.zipcode = params['zipcode'];
-      weatherService.getForecast(this.zipcode)
+      this.weatherService.getForecast(this.zipcode)
         .subscribe(data => this.forecast = data);
     });
   }
