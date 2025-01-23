@@ -1,8 +1,8 @@
-import {Injectable, signal} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 
 import {HttpClient} from '@angular/common/http';
-import {CurrentConditions, Forecast, ZipAndCurrentConditions} from './app.types';
+import {CurrentConditions, Forecast} from './app.types';
 
 @Injectable({providedIn: 'root'})
 export class WeatherService {
@@ -10,27 +10,17 @@ export class WeatherService {
   static URL = 'http://api.openweathermap.org/data/2.5';
   static APPID = '5a4b2d457ecbef9eb2a71e480b947604';
   static ICON_URL = 'https://raw.githubusercontent.com/udacity/Sunshine-Version-2/sunshine_master/app/src/main/res/drawable-hdpi/';
-  readonly currentConditions = signal<ZipAndCurrentConditions[]>([]);
 
   constructor(private http: HttpClient) { }
 
-  addCurrentConditions(zipcode: string): void {
+  getCurrentConditions(zipcode: string): Observable<CurrentConditions> {
     // Here we make a request to get the current conditions data from the API. Note the use of backticks and an expression to insert the zipcode
-    this.http.get<CurrentConditions>(`${WeatherService.URL}/weather?zip=${zipcode},us&units=imperial&APPID=${WeatherService.APPID}`)
-      .subscribe(data => this.currentConditions.update(conds => ([...conds, {zip: zipcode, data: data}]) ));
-  }
-
-  removeCurrentConditions(zipcode: string) {
-    for (let i in this.currentConditions()){
-      if (this.currentConditions()[i].zip == zipcode)
-        this.currentConditions.update(conds => conds.toSpliced(+i, 1));
-    }
+    return this.http.get<CurrentConditions>(`${WeatherService.URL}/weather?zip=${zipcode},us&units=imperial&APPID=${WeatherService.APPID}`);
   }
 
   getForecast(zipcode: string): Observable<Forecast> {
-    // Here we make a request to get the forecast data from the API. Note the use of backticks and an expression to insert the zipcode
+    // Here we make a request to get the forecast data from the API.
     return this.http.get<Forecast>(`${WeatherService.URL}/forecast/daily?zip=${zipcode},us&units=imperial&cnt=5&APPID=${WeatherService.APPID}`);
-
   }
 
   getWeatherIcon(id: number){
