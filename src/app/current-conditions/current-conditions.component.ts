@@ -5,13 +5,15 @@ import {WeatherService} from '../weather.service';
 import {CurrentConditionsState} from '../reducers/current-conditions.reducer';
 import {ZipCodeActions} from '../actions/zip-code.actions';
 import {selectCurrentConditions} from '../reducers';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-current-conditions',
   templateUrl: './current-conditions.component.html',
   imports: [
     DecimalPipe,
-    KeyValuePipe
+    KeyValuePipe,
+    RouterLink
   ],
   styleUrls: ['./current-conditions.component.css']
 })
