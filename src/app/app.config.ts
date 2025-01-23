@@ -9,6 +9,7 @@ import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { provideEffects } from '@ngrx/effects';
 import {CurrentConditionsEffects} from './effects/current-conditions.effects';
 import { provideRouterStore } from '@ngrx/router-store';
+import {ForecastEffects} from './effects/forecast.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -17,7 +18,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideStore(reducers, { metaReducers }),
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
-    provideEffects(CurrentConditionsEffects),
+    provideEffects(CurrentConditionsEffects, ForecastEffects),
     provideRouterStore()
 ]
 };
