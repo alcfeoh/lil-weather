@@ -31,4 +31,11 @@ export class CurrentConditionsEffects {
         )
     );
   });
+
+    removeCurrentConditions$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(ZipCodeActions.removeZipCode),
+            exhaustMap(({zipcode}) => of(CurrentConditionsActions.removeCurrentConditions({zipcode})))
+        )
+    });
 }

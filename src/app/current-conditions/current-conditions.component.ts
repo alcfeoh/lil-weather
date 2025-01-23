@@ -3,6 +3,7 @@ import {Store} from '@ngrx/store';
 import {DecimalPipe, KeyValuePipe} from '@angular/common';
 import {WeatherService} from '../weather.service';
 import {CurrentConditionsState} from '../reducers/current-conditions.reducer';
+import {ZipCodeActions} from '../actions/zip-code.actions';
 
 @Component({
   selector: 'app-current-conditions',
@@ -15,7 +16,12 @@ import {CurrentConditionsState} from '../reducers/current-conditions.reducer';
 })
 export class CurrentConditionsComponent {
 
-  currentConditions = inject(Store).selectSignal<CurrentConditionsState>(state => state.currentConditions);
+  private store = inject(Store);
+  currentConditions = this.store.selectSignal<CurrentConditionsState>(state => state.currentConditions);
 
   weatherService = inject(WeatherService);
+
+  removeZip(zipcode: string) {
+    this.store.dispatch(ZipCodeActions.removeZipCode({zipcode}));
+  }
 }

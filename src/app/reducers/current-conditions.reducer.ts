@@ -12,6 +12,12 @@ export const initialState: CurrentConditionsState = {};
 export const currentConditionsReducer = createReducer(
   initialState,
   on(CurrentConditionsActions.currentConditionsLoaded,
-    (state, action) => ({...state, [action.zipcode]: action.conditions}))
+    (state, action) => ({...state, [action.zipcode]: action.conditions})),
+  on(CurrentConditionsActions.removeCurrentConditions,
+    (state, action) => {
+      const newState = {...state};
+      delete newState[action.zipcode];
+      return newState;
+    })
 );
 
