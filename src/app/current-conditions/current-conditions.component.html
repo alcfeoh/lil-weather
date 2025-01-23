@@ -1,3 +1,16 @@
 <div>
+  Observable:
+  <ul>
+    @for(zip of zipcodes$ | async; track zip) {
+      <li>{{zip}}</li>
+    }
+  </ul>
+
+  Signal:
+  <ul>
+    @for(zip of zipcodes(); track zip) {
+      <li>{{zip}}</li>
+    }
+  </ul>
 
 </div>
