@@ -1,4 +1,6 @@
-import {Component} from '@angular/core';
+import {Component, inject} from '@angular/core';
+import {Store} from '@ngrx/store';
+import {ZipCodeActions} from '../actions/zip-code.actions';
 
 @Component({
   selector: 'app-zipcode-entry',
@@ -6,8 +8,10 @@ import {Component} from '@angular/core';
 })
 export class ZipcodeEntryComponent {
 
+  private store = inject(Store);
+
   addLocation(zipcode : string){
-    // TODO
+    this.store.dispatch(ZipCodeActions.addZipCode({zipcode}));
   }
 
 }
