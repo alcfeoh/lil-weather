@@ -1,20 +1,21 @@
 import {Component, inject} from '@angular/core';
 import {Store} from '@ngrx/store';
-import {zipCodesFeatureKey} from '../reducers/zip-codes.reducer';
-import {AsyncPipe} from '@angular/common';
-import {State} from '../reducers';
+import {DecimalPipe, KeyValuePipe} from '@angular/common';
+import {WeatherService} from '../weather.service';
+import {CurrentConditionsState} from '../reducers/current-conditions.reducer';
 
 @Component({
   selector: 'app-current-conditions',
   templateUrl: './current-conditions.component.html',
   imports: [
-    AsyncPipe
+    DecimalPipe,
+    KeyValuePipe
   ],
   styleUrls: ['./current-conditions.component.css']
 })
 export class CurrentConditionsComponent {
 
-  zipcodes$ = inject(Store).select(zipCodesFeatureKey);
+  currentConditions = inject(Store).selectSignal<CurrentConditionsState>(state => state.currentConditions);
 
-  zipcodes = inject(Store).selectSignal(state => state.zipCodes);
+  weatherService = inject(WeatherService);
 }
