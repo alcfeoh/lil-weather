@@ -20,5 +20,6 @@ export const reducers: ActionReducerMap<State> = {
   [currentConditionsFeatureKey]: currentConditionsReducer,
 };
 
-
 export const metaReducers: MetaReducer<State>[] = isDevMode() ? [] : [];
+
+export const selectCurrentConditions = (state: State) => state.currentConditions;
