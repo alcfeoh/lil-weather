@@ -2,8 +2,8 @@
   @for(data of currentConditions() | keyvalue; track data.key){
     @let zip = data.key;
     @let conditions = data.value;
-    <div class="well flex" routerLink="forecast/{{zip}}">
-      <div>
+    <div class="well flex" >
+      <div routerLink="forecast/{{zip}}">
         <h3>{{conditions.name}} ({{zip}})</h3>
         <h4>Current conditions: {{conditions.weather[0].main}}</h4>
         <h4>Temperatures today:</h4>
@@ -17,7 +17,7 @@
         </p>
       </div>
       <div>
-        <span class="close" (click)="removeZip(zip)">&times;</span>
+        <span class="close" (click)="zipRemoved.emit(zip)">&times;</span>
         <img [src]="weatherService.getWeatherIcon(conditions.weather[0].id)">
       </div>
     </div>
