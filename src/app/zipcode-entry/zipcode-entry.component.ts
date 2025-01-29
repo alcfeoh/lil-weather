@@ -11,4 +11,8 @@ export class ZipcodeEntryComponent {
   countries = input.required<Country[]>();
   zipAdded = output<string>();
 
+  addLocation(zipcode: string, country: string) {
+      // TODO Add support for country here
+      this.zipAdded.emit(zipcode);
+  }
 }
