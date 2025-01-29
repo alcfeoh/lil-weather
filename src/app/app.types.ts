@@ -1,3 +1,8 @@
+export interface Country {
+  name: string;
+  code: string;
+}
+
 export interface ZipAndCurrentConditions {
   zip: string;
   data: CurrentConditions;

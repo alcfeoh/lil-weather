@@ -1,4 +1,5 @@
-import {Component, output} from '@angular/core';
+import {Component, input, output} from '@angular/core';
+import {Country} from '../app.types';
 
 
 @Component({
@@ -7,6 +8,7 @@ import {Component, output} from '@angular/core';
 })
 export class ZipcodeEntryComponent {
 
+  countries = input.required<Country[]>();
   zipAdded = output<string>();
 
 }
