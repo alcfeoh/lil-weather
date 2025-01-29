@@ -15,12 +15,12 @@ export class WeatherService {
 
   getCurrentConditions(zipcode: string): Observable<CurrentConditions> {
     // Here we make a request to get the current conditions data from the API. Note the use of backticks and an expression to insert the zipcode
-    return this.http.get<CurrentConditions>(`${WeatherService.URL}/weather?zip=${zipcode},us&units=imperial&APPID=${WeatherService.APPID}`);
+    return this.http.get<CurrentConditions>(`${WeatherService.URL}/weather?zip=${zipcode}&units=imperial&APPID=${WeatherService.APPID}`);
   }
 
   getForecast(zipcode: string): Observable<Forecast> {
     // Here we make a request to get the forecast data from the API.
-    return this.http.get<Forecast>(`${WeatherService.URL}/forecast/daily?zip=${zipcode},us&units=imperial&cnt=5&APPID=${WeatherService.APPID}`);
+    return this.http.get<Forecast>(`${WeatherService.URL}/forecast/daily?zip=${zipcode}&units=imperial&cnt=5&APPID=${WeatherService.APPID}`);
   }
 
   getWeatherIcon(id: number){
