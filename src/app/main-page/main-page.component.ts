@@ -18,10 +18,13 @@ import {CountriesStore} from '../countries.store';
 export class MainPageComponent {
 
   private store = inject(Store);
-  countries = inject(CountriesStore).countries;
+  private countryStore = inject(CountriesStore);
+  countries = this.countryStore.countries;
   currentConditions = this.store.selectSignal<CurrentConditionsState>(selectCurrentConditions);
 
   addLocation(zipcode : string){
+    const [zip, country] = zipcode.split(',');
+    this.countryStore.selectCountry(country);
     this.store.dispatch(ZipCodeActions.addZipCode({zipcode}));
   }
 

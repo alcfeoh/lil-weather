@@ -1,5 +1,5 @@
 import {Country} from './app.types';
-import {inject, Injectable} from '@angular/core';
+import {effect, inject, Injectable} from '@angular/core';
 import {patchState, signalState} from '@ngrx/signals';
 import {rxMethod} from '@ngrx/signals/rxjs-interop';
 import {exhaustMap, pipe, tap} from 'rxjs';
@@ -8,11 +8,13 @@ import {CountryService} from './country.service';
 const DEFAULT_COUNTRIES: Country[] = [];
 
 type CountriesState = {
-  countries: Country[]
+  countries: Country[],
+  selectedCountry: string
 }
 
 const initialState: CountriesState = {
-  countries: DEFAULT_COUNTRIES
+  countries: DEFAULT_COUNTRIES,
+  selectedCountry: ""
 }
 
 @Injectable({
@@ -28,6 +30,10 @@ export class CountriesStore {
     this.loadCountries();
   }
 
+  selectCountry(selectedCountry: string) {
+    patchState(this.state, {selectedCountry});
+  }
+
   readonly loadCountries = rxMethod<void>(
     pipe(
       exhaustMap(() => {
@@ -39,5 +45,7 @@ export class CountriesStore {
       })
     )
   );
+
+  private logger = effect(() => console.log("Countries state:", this.state()));
 
 }
