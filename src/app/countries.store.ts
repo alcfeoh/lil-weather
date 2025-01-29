@@ -1,12 +1,11 @@
 import {Country} from './app.types';
-import {Injectable} from '@angular/core';
-import {signalState} from '@ngrx/signals';
+import {inject, Injectable} from '@angular/core';
+import {patchState, signalState} from '@ngrx/signals';
+import {rxMethod} from '@ngrx/signals/rxjs-interop';
+import {exhaustMap, pipe, tap} from 'rxjs';
+import {CountryService} from './country.service';
 
-const DEFAULT_COUNTRIES: Country[] = [
-  {code: 'US', name: 'United States of America'},
-  {code: 'CA', name: 'Canada'},
-  {code: 'FR', name: 'France'}
-];
+const DEFAULT_COUNTRIES: Country[] = [];
 
 type CountriesState = {
   countries: Country[]
@@ -21,7 +20,24 @@ const initialState: CountriesState = {
 })
 export class CountriesStore {
 
+  private countryService = inject(CountryService);
   private readonly state = signalState(initialState);
   readonly countries = this.state.countries;
+
+  constructor() {
+    this.loadCountries();
+  }
+
+  readonly loadCountries = rxMethod<void>(
+    pipe(
+      exhaustMap(() => {
+        return this.countryService.getCountries().pipe(
+          tap({
+            next: (countries) => patchState(this.state, { countries }),
+          })
+        );
+      })
+    )
+  );
 
 }
